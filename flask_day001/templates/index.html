@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block extCSS %}
+    <link rel="stylesheet" href="{{ url_for("static",filename="css/index.css") }}">
+{% endblock %}
+
+{% block header %}
+    <h1>hello 老边</h1>
+    <div id="nim">hello</div>
+{#<ul>
+    {% for foo in student %}
+        <li><span>{{ foo.id }}</span>{{ foo.name }}</li>
+    {% endfor %}
+
+</ul>#}
+
+{% endblock %}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body>
+<form action="{{ url_for("frst_blue.login") }}" method="post">
+    <input type="text" name="username" placeholder="请输入用户名">
+    <input type="submit">
+
+
+
+</form>
+<a href="{{ url_for("frst_blue.home") }}">返回</a>
+</body>
+</html>

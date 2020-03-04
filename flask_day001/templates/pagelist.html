@@ -1,0 +1,61 @@
+{% extends 'bootstrap/base.html' %}
+{% block content %}
+    <div class="container">
+        <ul>
+            {% for foo in students.items %}
+                <li><span>{{ foo.id }}</span>{{ foo.name }}</li>
+            {% endfor %}
+        </ul>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if students.has_prev %}
+                    <li>
+                        <a href="{{ url_for('f_blue.get_pagi') }}?page={{ students.prev_num }}&per_page={{ per_page }}"
+                           aria-label="Previous">
+
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="disabled">
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+
+
+                {% for page in students.iter_pages() %}
+                    {% if page %}
+                        {% if page != students.page %}
+                            <li>
+                                <a href="{{ url_for('f_blue.get_pagi') }}?page={{ page }}&per_page={{ per_page }}">{{ page }}</a>
+                            </li>
+                        {% else %}
+                            <li class="active"><a href="#">{{ page }}</a></li>
+                        {% endif %}
+                    {% else %}
+                        <li><span class=ellipsis>…</span></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if students.has_next %}
+                    <li>
+                        <a href="{{ url_for('f_blue.get_pagi') }}?page={{ students.next_num }}&per_page={{ per_page }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="disabled">
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    </div>
+{% endblock %}

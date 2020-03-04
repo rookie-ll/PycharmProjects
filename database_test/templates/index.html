@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for item in page_data.items %}
+    <p>{{ item.title }}</p>
+    <p>{{ item.body }}</p>
+    <hr/>
+    {% for com in comment_date.items %}
+        {% if com.post_id==item.id and com.reply_id==none %}
+            <p style="margin-left: 20px">id:{{ com.id }},{{ com.auther }}:{{ com.body }}</p>
+
+        {% endif %}
+        {% for rep in comment_date.items %}
+            {% if com.id==rep.reply_id %}
+                <hr/>
+                <p style="margin-left: 40px">id:{{ rep.id }},{{ rep.auther }}:{{ rep.body }}</p>
+            {% endif %}
+        {% endfor %}
+
+
+        {#        <hr/>#}
+        {#        <p style="margin-left: 40px">回复</p>#}
+    {% endfor %}
+
+
+{% endfor %}
+<br/>
+<hr/>
+{#{% for item in page_data.items %}#}
+{#    <p>{{ item.title }}</p>#}
+{#    <p>{{ item.body }}</p>#}
+{#    <hr/>#}
+{#    {% for com in comment_date.items %}#}
+{#        {% if com.post_id==item.id and com.reply_id==none %}#}
+{#            <p style="margin-left: 20px">id:{{ com.id }},{{ com.auther }}:{{ com.body }}</p>#}
+{##}
+{#        {% endif %}#}
+{#        {% for foo in comment_date.items %}#}
+{#            {% if foo.replys %}#}
+{#                {% for rep in foo.replys %}#}
+{#                <hr/>#}
+{#                <p style="margin-left: 40px">id:{{ rep.id }},{{ rep.auther }}:{{ rep.body }}</p>#}
+{#                {% endfor %}#}
+{##}
+{##}
+{#            {% endif %}#}
+{#        {% endfor %}#}
+{##}
+{#    {% endfor %}#}
+{##}
+{##}
+{#            <hr/>#}
+{#            <p style="margin-left: 40px">回复</p>#}
+{#{% endfor %}#}
+
+
+</body>
+</html>

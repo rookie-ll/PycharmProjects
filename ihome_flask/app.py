@@ -1,0 +1,14 @@
+from flask import Flask
+from pymysql import connect
+
+
+app = Flask(__name__)
+
+con=connect()
+@app.route('/')
+def hello_world():
+    return 'Hello World!'
+
+
+if __name__ == '__main__':
+    app.run()

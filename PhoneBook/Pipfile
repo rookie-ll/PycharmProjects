@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+flask = {index = "http://pypi.douban.com/simple/",version = "*"}
+jinja2 = "*"
+flask-sqlalchemy = "*"
+flask-scrip = "*"
+flask-script = "*"
+flaask = {index = "http://pypi.douban.com/simple/",version = "*"}
+flask-bootstrap = {index = "http://pypi.douban.com/simple/",version = "*"}
+flask-bootstarp = {index = "http://pypi.douban.com/simple/",version = "*"}
+
+[requires]
+python_version = "3.6"

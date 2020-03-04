@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>page</title>
+</head>
+<body>
+<ul>
+    {% for foo in student.items %}
+        <li>{{ foo.name }}</li>
+    {% endfor %}
+
+</ul>
+<a href="{{ url_for("f_blue.pagelist") }}?page=2&per_page=5">这是个超链接</a>
+</body>
+</html>

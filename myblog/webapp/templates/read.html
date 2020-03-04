@@ -1,0 +1,246 @@
+{% extends "common/base.html" %}
+
+{% block title %}
+    文章阅读
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for("static",filename="font-awesome/css/font-awesome.min.css") }}">
+    <link rel="stylesheet" href="{{ url_for("static",filename="layui/css/layui.css") }}"/>
+    <link rel="stylesheet" href="{{ url_for("static",filename="css/master.css") }}"/>
+    <link rel="stylesheet" href="{{ url_for("static",filename="css/gloable.css") }}"/>
+    <link rel="stylesheet" href="{{ url_for("static",filename="css/nprogress.css") }}"/>
+    <link rel="stylesheet" href="{{ url_for("static",filename="css/blog.css") }}"/>
+    <link rel="shortcut icon" href="{{ url_for("static",filename="base/images/logo.png") }}">
+    <link rel="stylesheet" href="{{ url_for("static",filename="base/css/bootstrap.min.css") }}">
+    <link rel="stylesheet" href="{{ url_for("static",filename="base/css/bootstrap-movie.css") }}">
+    <link rel="stylesheet" href="{{ url_for("static",filename="base/css/animate.css") }}">
+{% endblock %}
+{% block content %}
+    <div class="doc-container" id="doc-container">
+        <div class="container-fixed">
+            <div class="col-content" style="width:100%">
+                <div class="inner">
+                    <article class="article-list">
+                        <input type="hidden" value="@Model.BlogTypeID" id="blogtypeid"/>
+                        <section class="article-item">
+                            <aside class="title" style="line-height:1.5;">
+                                <h4>{{ post.title }}</h4>
+                                <p class="fc-grey fs-14">
+                                    <small>
+                                        作者：<a href="javascript:void(0)" target="_blank"
+                                              class="fc-link">{{ post.user.username }}</a>
+                                    </small>
+                                    <small class="ml10">围观群众：<i class="readcount">{{ post.page_views }}</i></small>
+                                    <small class="ml10">更新于 <label>{{ post.timestamp }}</label></small>
+                                </p>
+                            </aside>
+                            <div class="time mt10" style="padding-bottom:0;">
+                                <span class="day">{{ post.timestamp|day }}</span>
+                                <span class="month fs-18">{{ post.timestamp|month }}
+                                    <small class="fs-14">月</small></span>
+                                <span class="year fs-18">{{ post.timestamp|year }}</span>
+                            </div>
+                            <div class="content artiledetail"
+                                 style="border-bottom: 1px solid #e1e2e0; padding-bottom: 20px;">
+                                {{ post.body }}
+                                <div class="copyright mt20">
+                                    <p class="f-toe fc-black">
+                                        非特殊说明，本文版权归 刘大拿 所有，转载请注明出处.
+                                    </p>
+                                    <p class="f-toe">
+                                        本文标题：
+                                        <a href="javascript:void(0)" class="r-title">{{ post.title }}</a>
+                                    </p>
+                                    <p class="f-toe">
+                                        本文网址：
+                                        <a href="#">https://www.yanshisan.cn/Blog/Read/7</a>
+                                    </p>
+                                </div>
+                                <div id="aplayer" style="margin:5px 0"></div>
+                                <h6>延伸阅读</h6>
+                                <ol class="b-relation"></ol>
+                            </div>
+                            <div class="bdsharebuttonbox share" data-tag="share_1">
+                                <ul>
+                                    <li class="f-praise"><span><a class="s-praise"></a></span></li>
+                                    <li class="f-weinxi"><a class="s-weinxi" data-cmd="weixin"></a></li>
+                                    <li class="f-sina"><a class="s-sina" data-cmd="tsina"></a></li>
+                                    <li class="f-qq" href="#"><i class="fa fa-qq"></i></li>
+                                    <li class="f-qzone"><a class="s-qzone" data-cmd="qzone"></a></li>
+                                </ul>
+                            </div>
+                            <div class="f-cb"></div>
+                            <div class="mt20 f-fwn fs-24 fc-grey comment"
+                                 style="border-top: 1px solid #e1e2e0; padding-top: 20px;">
+                            </div>
+
+                            <fieldset class="layui-elem-field layui-field-title">
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        <span aria-hidden="true">×</span>
+                                        <span class="sr-only">Close</span>
+                                    </button>
+                                    <strong>请先<a href="" target="_blank" class="text-info">登录</a>，才可参与评论！</strong>
+                                </div>
+                                <legend>发表评论</legend>
+                                <div class="layui-field-box">
+                                    <div class="leavemessage" style="text-align:initial">
+                                        <form class="layui-form blog-editor" action="" method="post">
+                                            <input type="hidden" name="articleid" id="articleid" value="@Model.ID">
+                                            <div class="layui-form-item">
+                                                {{ comment_form.textfeild }}
+
+                                            </div>
+                                            <div class="layui-form-item">
+                                                {{ comment_form.submit }}
+                                                {{ comment_form.csrf_token }}
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <ul class="blog-comment" id="blog-comment">
+                                {% for comment in page_data.items %}
+                                    {% if not comment.reply_id %}
+
+
+                                        <li class="zoomIn article">
+                                            <div class="comment-parent">
+                                                <a name="remark-1"></a>
+                                                <img src="https://thirdqq.qlogo.cn/qqapp/101465933/7627F745B95BFAC18C6C481FE72B4EB1/100"/>
+                                                <div class="info">
+                                                    <span class="username">{{ comment.user.username }}</span>
+                                                </div>
+                                                <div class="comment-content">
+                                                    {{ comment.body }}
+                                                </div>
+                                                <p class="info info-footer">
+                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                    <span>四川</span>
+                                                    <span class="comment-time">{{ comment.timestamp }}</span>
+                                                    <a href="javascript:;" class="btn-reply"
+                                                       data-targetid="{{ comment.id }}"
+                                                       data-targetname="{{ comment.user.username }}">回复</a>
+                                                </p>
+                                            </div>
+                                            <hr/>
+                                            {% for reply in comment.replies %}
+                                                <div class="comment-child">
+                                                    <a name="reply-1"></a>
+                                                    <img src="https://thirdqq.qlogo.cn/qqapp/101465933/7627F745B95BFAC18C6C481FE72B4EB1/100">
+                                                    <div class="info">
+                                                        <span class="username">{{ reply.user.username }}</span>
+                                                        <span style="padding-right:0;margin-left:-5px;">回复</span>
+                                                        <span class="username">{{ comment.user.username }}</span>
+                                                        <span>{{ reply.body }}</span>
+                                                    </div>
+                                                    <p class="info">
+                                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                        <span>四川</span>
+                                                        <span class="comment-time">{{ reply.timestamp }}</span>
+                                                        <a href="javascript:;" class="btn-reply"
+                                                           data-targetid="{{ reply.id }}"
+                                                           data-targetname="{{ reply.user.username }}">回复</a>
+                                                    </p>
+                                                </div>
+                                                {% for reply_1 in reply.replies %}
+                                                    <div class="comment-child">
+                                                        <a name="reply-1"></a>
+                                                        <img src="https://thirdqq.qlogo.cn/qqapp/101465933/7627F745B95BFAC18C6C481FE72B4EB1/100">
+                                                        <div class="info">
+                                                            <span class="username">{{ reply_1.user.username }}</span>
+                                                            <span style="padding-right:0;margin-left:-5px;">回复</span>
+                                                            <span class="username">{{ reply.user.username }}</span>
+                                                            <span>{{ reply.body }}</span>
+                                                        </div>
+                                                        <p class="info">
+                                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                            <span>四川</span>
+                                                            <span class="comment-time">{{ reply_1.timestamp }}</span>
+                                                            <a href="javascript:;" class="btn-reply"
+                                                               data-targetid="{{ reply_1.id }}"
+                                                               data-targetname="{{ reply_1.user.username }}">回复</a>
+                                                        </p>
+                                                    </div>
+                                                    {% for reply_2 in reply_1.replies %}
+                                                        <div class="comment-child">
+                                                            <a name="reply-1"></a>
+                                                            <img src="https://thirdqq.qlogo.cn/qqapp/101465933/7627F745B95BFAC18C6C481FE72B4EB1/100">
+                                                            <div class="info">
+                                                                <span class="username">{{ reply_2.user.username }}</span>
+                                                                <span style="padding-right:0;margin-left:-5px;">回复</span>
+                                                                <span class="username">{{ reply_1.user.username }}</span>
+                                                                <span>{{ reply.body }}</span>
+                                                            </div>
+                                                            <p class="info">
+                                                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                                <span>四川</span>
+                                                                <span class="comment-time">{{ reply_2.timestamp }}</span>
+                                                                <a href="javascript:;" class="btn-reply"
+                                                                   data-targetid="{{ reply_2.id }}"
+                                                                   data-targetname="{{ reply_2.user.username }}">回复</a>
+                                                            </p>
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            {% endfor %}
+                                            <div class="replycontainer layui-hide">
+                                                <form class="layui-form" action="" method="post">
+                                                    <input type="hidden" name="remarkId" value="{{ comment.id }}">
+                                                    <input type="hidden" name="targetUserId" value="0">
+                                                    <div class="layui-form-item">
+                                                        {{ reply_form.reply }}
+                                                        {#<textarea name="replyContent" lay-verify="replyContent" placeholder="请输入回复内容" class="layui-textarea" style="min-height:80px;"></textarea>#}
+                                                    </div>
+                                                    <div class="layui-form-item">
+                                                        {{ reply_form.submit }}
+                                                        {{ reply_form.csrf_token }}
+                                                        {#<button class="layui-btn layui-btn-xs" lay-submit="formReply" lay-filter="formReply">提交</button>#}
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </section>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ url_for("static",filename="layui/layui.js") }}"></script>
+    <script src="{{ url_for("static",filename="js/yss/gloable.js") }}"></script>
+    <script src="{{ url_for("static",filename="js/plugins/nprogress.js") }}"></script>
+    <script src="{{ url_for("static",filename="js/pagecomment.js") }}"></script>
+    <script>NProgress.start();</script>
+    <script>
+        window.onload = function () {
+            NProgress.done();
+        };
+    </script>
+    <script src="{{ url_for("static",filename="base/js/jquery.min.js") }}"></script>
+    <script src="{{ url_for("static",filename="base/js/bootstrap.min.js") }}"></script>
+    <script src="{{ url_for("static",filename="base/js/jquery.singlePageNav.min.js") }}"></script>
+    <script src="{{ url_for("static",filename="base/js/wow.min.js") }}"></script>
+    <script src="{{ url_for("static",filename="lazyload/jquery.lazyload.min.js") }}"></script>
+    <script src="//cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>
+    <script>
+        $(function () {
+            new WOW().init();
+        })
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("img.lazy").lazyload({
+                effect: "fadeIn"
+            });
+        });
+
+    </script>
+{% endblock %}

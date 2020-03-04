@@ -1,0 +1,20 @@
+{% extends "bootstrap/base.html" %}
+
+{% block content %}
+     <form method="post" action="{{ url_for("blue.up_class",id=e_class.id) }}">
+    <label>增加数据</label>
+        <p><label>店铺名字</label>
+        <input name="s_name" value="{{ e_class.store_name }}"></p>
+        <p><label>电话号码</label>
+        <input name="phone" value="{{ e_class.phone }}"></p>
+        <p><label>电话号码一</label>
+        <input name="phone2" value="{{ e_class.phone2 }}"></p>
+        <p><label>备注</label>
+        <input type="text" name="rem" value="{{ e_class.rem }}"></p>
+        <p><input type="submit" placeholder="提交"></p>
+    </form>
+    {% for message in get_flashed_messages(err) %}
+        {{ message }}
+    {% endfor %}
+
+{% endblock %}

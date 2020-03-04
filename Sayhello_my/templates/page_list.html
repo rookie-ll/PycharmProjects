@@ -1,0 +1,48 @@
+{% macro render_page(url,page_data,page=1) %}
+
+    {% if page_data %}
+        {% if page_data.has_prev %}
+            <li>
+                <a href="{{ url_for(url,page=page_data.prev_num) }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% else %}
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% endif %}
+        {% for foo in page_data.iter_pages() %}
+            {% if foo %}
+                {% if page_data.page==foo %}
+                    <li><a href="#">{{ foo }}</a></li>
+                {% else %}
+                    <li><a href="{{ url_for(url,page=foo) }}">{{ foo }}</a></li>
+                {% endif %}
+
+            {% endif %}
+
+        {% endfor %}
+
+
+
+        {% if page_data.has_next %}
+            <li>
+                <a href="{{ url_for(url,page=page_data.next_num) }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% else %}
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% endif %}
+
+    {% endif %}
+
+{% endmacro %}
+

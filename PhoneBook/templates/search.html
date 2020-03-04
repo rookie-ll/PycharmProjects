@@ -1,0 +1,30 @@
+{% extends "bootstrap/base.html" %}
+{% import "page_list.html" as pp %}
+
+{% block content %}
+    <form action="{{ url_for("blue.show_class",page=1) }}">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <input name="key" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+        <button class="btn btn-default" type="submit">Go!</button>
+      </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+    </form>
+
+    <ul class="list-group">
+        {% for foo in s_class.items %}
+            <li class="list-group-item">
+                序号：{{ foo.id }},店铺名字：{{ foo.store_name }},手机号码：{{ foo.phone }},号码２：{{ foo.phone2 }},备注：{{ foo.rem }}
+                </li>
+        {% endfor %}
+    </ul>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {{ pp.render_page(s_class,"blue.show_class") }}
+        </ul>
+    </nav>
+{% endblock %}

@@ -1,0 +1,13 @@
+li{
+    list-style-type: none;
+}
+ul li{
+    height: 50px;
+    width: 50px;
+    border: 1px solid orange;
+    text-align: center;
+    line-height: 50px;
+    float: left;
+    border-radius: 3px;
+
+}

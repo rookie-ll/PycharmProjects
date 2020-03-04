@@ -1,0 +1,1 @@
+2019-04-23 04:49:11,648 - werkzeug - INFO - 127.0.0.1 - - [23/Apr/2019 04:49:11] "GET /static/css/index.css HTTP/1.1" 404 -

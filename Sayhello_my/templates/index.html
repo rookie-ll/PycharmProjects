@@ -1,0 +1,47 @@
+{#{% extends 'base.html' %}#}
+{% extends "bootstrap/base.html" %}
+{% import "page_list.html" as pp%}
+
+{#{% from 'bootstrap/wtf.html' import wtf %}#}
+
+{% block content %}
+    <div class="hello-form">
+        {# {{ render_form(form, action=request.full_path) }}#}
+        <form action="{{ url_for("api.index",page=1) }}" method="post">
+            <label>name</label>
+            <p><input type="text" name="name"></p>
+
+            <p><textarea name="msg"></textarea></p>
+            <button>提交</button>
+        </form>
+    </div>
+    <h5>{#{{ messages|length }} messages#}
+        <small class="float-right">
+            <a href="#bottom" title="Go Bottom">&darr;</a>
+        </small>
+    </h5>
+    <div class="list-group">
+        {% for message in page_data.items %}
+            <a class="list-group-item list-group-item-action flex-column">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1 text-success">{{ message.name }}
+                        <small class="text-muted"> #{#{{ loop.revindex }}#}</small>
+                    </h5>
+                    <small data-toggle="tooltip" data-placement="top"
+                            {#                           data-timestamp="{{ message.timestamp.strftime('%Y-%m-%dT%H:%M:%SZ') }}"#}
+                           data-delay="500">
+                        {#                        {{ moment(message.timestamp).fromNow(refresh=True) }}#}
+                    </small>
+                </div>
+                <p class="mb-1">{{ message.body }}</p>
+            </a>
+        {% endfor %}
+
+    </div>
+    <nav aria-label="Page navigation">
+    <ul class="pagination">
+        {{ pp.render_page("api.index",page_data,page=1) }}
+    </ul>
+
+    </nav>
+{% endblock %}
